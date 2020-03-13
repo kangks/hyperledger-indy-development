@@ -1,0 +1,18 @@
+version: "3.7"
+
+services:
+  indy-server:
+    build: 
+      context: indy-sdk/ci
+      dockerfile: indy-pool.dockerfile
+    image: indy-server
+    ports:
+      - 9701-9708:9701-9708 
+  sdk:
+    build: development/
+    network_mode: host
+    image: indy-sdk
+    depends_on:
+      - indy-server
+    volumes:
+      - ./indy-sdk:/home/indy/indy-sdk      
